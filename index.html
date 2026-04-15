@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login & Signup</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe, #93c5fd);
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      padding: 30px 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .tabs {
+      display: flex;
+      background: #e5e7eb;
+      border-radius: 10px;
+      padding: 5px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .tab-btn.active {
+      background: white;
+      color: #2563eb;
+    }
+
+    .form-box {
+      display: none;
+    }
+
+    .form-box.active {
+      display: block;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #1f2937;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #374151;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .input-group input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      background: #2563eb;
+      color: white;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+
+    .message {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 14px;
+      min-height: 20px;
+      font-weight: bold;
+    }
+
+    .error {
+      color: #dc2626;
+    }
+
+    .success {
+      color: #16a34a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-btn active" id="loginTab">Login</button>
+      <button class="tab-btn" id="signupTab">Signup</button>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form-box active" id="loginFormBox">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <div class="input-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" placeholder="Enter your email" />
+        </div>
+
+        <div class="input-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" />
+        </div>
+
+        <button type="submit" class="btn">Login</button>
+        <p id="loginMessage" class="message"></p>
+      </form>
+    </div>
+
+    <!-- Signup Form -->
+    <div class="form-box" id="signupFormBox">
+      <h2>Signup</h2>
+      <form id="signupForm">
+        <div class="input-group">
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" placeholder="Enter your name" />
+        </div>
+
+        <div class="input-group">
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" placeholder="Enter your email" />
+        </div>
+
+        <div class="input-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="Enter password" />
+        </div>
+
+        <div class="input-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="Confirm password" />
+        </div>
+
+        <button type="submit" class="btn">Signup</button>
+        <p id="signupMessage" class="message"></p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const loginTab = document.getElementById("loginTab");
+    const signupTab = document.getElementById("signupTab");
+    const loginFormBox = document.getElementById("loginFormBox");
+    const signupFormBox = document.getElementById("signupFormBox");
+
+    loginTab.addEventListener("click", () => {
+      loginTab.classList.add("active");
+      signupTab.classList.remove("active");
+      loginFormBox.classList.add("active");
+      signupFormBox.classList.remove("active");
+    });
+
+    signupTab.addEventListener("click", () => {
+      signupTab.classList.add("active");
+      loginTab.classList.remove("active");
+      signupFormBox.classList.add("active");
+      loginFormBox.classList.remove("active");
+    });
+
+    function getUsers() {
+      return JSON.parse(localStorage.getItem("users")) || [];
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem("users", JSON.stringify(users));
+    }
+
+    function isValidEmail(email) {
+      const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/i;
+      return pattern.test(email);
+    }
+
+    // Signup
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("signupName").value.trim();
+      const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+      const password = document.getElementById("signupPassword").value.trim();
+      const confirmPassword = document.getElementById("confirmPassword").value.trim();
+      const signupMessage = document.getElementById("signupMessage");
+
+      signupMessage.textContent = "";
+      signupMessage.className = "message";
+
+      if (!name || !email || !password || !confirmPassword) {
+        signupMessage.textContent = "All fields are required.";
+        signupMessage.classList.add("error");
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        signupMessage.textContent = "Enter a valid email.";
+        signupMessage.classList.add("error");
+        return;
+      }
+
+      if (password.length < 6) {
+        signupMessage.textContent = "Password must be at least 6 characters.";
+        signupMessage.classList.add("error");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        signupMessage.textContent = "Passwords do not match.";
+        signupMessage.classList.add("error");
+        return;
+      }
+
+      const users = getUsers();
+      const existingUser = users.find(user => user.email === email);
+
+      if (existingUser) {
+        signupMessage.textContent = "Email already registered.";
+        signupMessage.classList.add("error");
+        return;
+      }
+
+      users.push({ name, email, password });
+      saveUsers(users);
+
+      signupMessage.textContent = "Signup successful.";
+      signupMessage.classList.add("success");
+      document.getElementById("signupForm").reset();
+    });
+
+    // Login
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+      const password = document.getElementById("loginPassword").value.trim();
+      const loginMessage = document.getElementById("loginMessage");
+
+      loginMessage.textContent = "";
+      loginMessage.className = "message";
+
+      if (!email || !password) {
+        loginMessage.textContent = "All fields are required.";
+        loginMessage.classList.add("error");
+        return;
+      }
+
+      const users = getUsers();
+      const matchedUser = users.find(
+        user => user.email === email && user.password === password
+      );
+
+      if (!matchedUser) {
+        loginMessage.textContent = "Invalid email or password.";
+        loginMessage.classList.add("error");
+        return;
+      }
+
+      loginMessage.textContent = "Login successful.";
+      loginMessage.classList.add("success");
+      document.getElementById("loginForm").reset();
+    });
+  </script>
+</body>
+</html>
