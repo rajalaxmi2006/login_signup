@@ -1,6 +1,6 @@
 # 🔐 Login & Signup Web App
 
-A simple and responsive **Login & Signup interface** built using **HTML, CSS, and Vanilla JavaScript**, with client-side authentication using `localStorage`.
+A simple and responsive **Login & Signup interface** built using **HTML, CSS, and JavaScript**, with client-side authentication using `localStorage`.
 
 ---
 
