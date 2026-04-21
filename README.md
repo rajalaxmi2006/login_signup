@@ -126,7 +126,7 @@ Users are stored as:
 If you have any questions, suggestions, or issues:
 
 - 📧 Email: biswalrajalaxmi901@gmail.com  
-- 💼 LinkedIn: https://linkedin.com/in/your-profile  
+- 💼 LinkedIn: www.linkedin.com/in/rajalaxmi-biswal-90652337b 
 - 🐙 GitHub: https://github.com/rajalaxmi2006/ 
 
 Feel free to open an issue or contribute to the project!
