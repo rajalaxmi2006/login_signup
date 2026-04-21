@@ -120,3 +120,13 @@ Users are stored as:
 - Inspired by modern authentication UI patterns  
 - Thanks to open-source community resources and documentation  
 - Built as a learning project for frontend development  
+
+## 📞 Support & Contact
+
+If you have any questions, suggestions, or issues:
+
+- 📧 Email: biswalrajalaxmi901@gmail.com  
+- 💼 LinkedIn: https://linkedin.com/in/your-profile  
+- 🐙 GitHub: https://github.com/rajalaxmi2006/ 
+
+Feel free to open an issue or contribute to the project!
